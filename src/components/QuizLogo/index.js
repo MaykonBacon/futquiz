@@ -1,17 +1,14 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable jsx-a11y/alt-text */
 import styled from 'styled-components';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function Logo({ className }) {
+function Logo() {
   return (
     <img width="100" src="https://i.postimg.cc/kGYjSG5J/Seek-Png-com-soccer-ball-png-3089945.png" />
   );
 }
-
-Logo.propTypes = {
-  className: PropTypes.string.isRequired,
-};
 
 const QuizLogo = styled(Logo)`
   margin: auto;

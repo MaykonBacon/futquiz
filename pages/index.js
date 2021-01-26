@@ -1,10 +1,15 @@
-import styled from 'styled-components'
+/* eslint-disable func-names */
+/* eslint-disable spaced-comment */
+import React from 'react';
+import styled from 'styled-components';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import db from '../db.json';
-import Widget from '../src/components/Widget'
-import QuizLogo from '../src/components/QuizLogo'
-import QuizBackground from '../src/components/QuizBackground'
-import Footer from '../src/components/Footer'
-import GitHubCorner from '../src/components/GitHubCorner'
+import Widget from '../src/components/Widget';
+import QuizLogo from '../src/components/QuizLogo';
+import QuizBackground from '../src/components/QuizBackground';
+import Footer from '../src/components/Footer';
+import GitHubCorner from '../src/components/GitHubCorner';
 
 export const QuizContainer = styled.div`
   width: 100%;
@@ -18,28 +23,65 @@ export const QuizContainer = styled.div`
 `;
 
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState('');
   return (
+
     <QuizBackground backgroundImage={db.bg}>
+      <Head>
+        <title>FutQuiz</title>
+        <meta name="title" content="FutQuiz" />
+        <meta name="description" content="" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://futquiz.maykonbacon.vercel.app/" />
+        <meta property="og:title" content="FutQuiz" />
+        <meta property="og:description" content="" />
+        <meta property="og:image" content="" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://futquiz.maykonbacon.vercel.app/" />
+        <meta property="twitter:title" content="FutQuiz" />
+        <meta property="twitter:description" content="" />
+        <meta property="twitter:image" content="" />
+      </Head>
       <QuizContainer>
         <QuizLogo />
         <Widget>
           <Widget.Header>
-          <h1>{db.title}</h1>
+            <h1>{db.title}</h1>
           </Widget.Header>
-          <Widget.Content> 
-            <p>{db.description}</p>
+          <Widget.Content>
+            <form onSubmit={function (e) {
+              e.preventDefault();
+              router.push(`/quiz?name=${name}`);
+            }}
+            >
+              <input
+                onChange={function (infosDoEvento) {
+                  //State
+                  //name = infosDoEvento.target.value;
+                  setName(infosDoEvento.target.value);
+                }}
+                placeholder="Diz aí seu nome"
+              />
+              <button type="submit" disabled={name.length === 0}>
+                Jogar
+                {name}
+              </button>
+            </form>
           </Widget.Content>
         </Widget>
 
         <Widget>
           <Widget.Content>
             <h1>Quizes da galera</h1>
-            <p>Aqui você encontrará outros quizes bem legais de pessoas que estão participando da Imersão da Alura.</p>
+            <p>Aqui você encontrará outros quizes bem legais de outras pessoas.</p>
           </Widget.Content>
         </Widget>
         <Footer />
       </QuizContainer>
       <GitHubCorner projectUrl="https://github.com/MaykonBacon" />
     </QuizBackground>
-  )
+  );
 }
